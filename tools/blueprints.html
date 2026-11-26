@@ -1,0 +1,307 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#040c18">
+<title>Blueprints of the World — Story Video Studio</title>
+<style>
+:root{--bg:#040c18;--pn:#0a1a30;--cy:#38bdf8;--am:#fbbf24;--tx:#e2f1ff;--ln:#16406a}
+*{box-sizing:border-box}body{margin:0;min-height:100vh;color:var(--tx);font:14px "Segoe UI",Inter,system-ui,sans-serif;background:radial-gradient(900px 500px at 15% -10%,#0c3a6a66,transparent 60%),radial-gradient(700px 500px at 95% 105%,#fbbf2418,transparent 60%),linear-gradient(#0e2a4a44 1px,transparent 1px) 0 0/28px 28px,linear-gradient(90deg,#0e2a4a44 1px,transparent 1px) 0 0/28px 28px,var(--bg)}
+.mono{font-family:ui-monospace,Menlo,monospace;letter-spacing:.08em}
+header{padding:12px 18px;border-bottom:1px solid var(--ln);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px}
+h1{font-size:17px;margin:0;color:var(--cy);text-shadow:0 0 18px #38bdf877}h1 span{color:var(--am);text-shadow:0 0 18px #fbbf2477}
+main{display:grid;grid-template-columns:minmax(0,1fr) 400px;gap:16px;padding:16px;max-width:1400px;margin:auto}
+@media(max-width:960px){main{grid-template-columns:1fr}}
+.card{background:linear-gradient(160deg,#0d2342cc,#071428dd);border:1px solid #1d5a94;border-radius:16px;padding:16px;box-shadow:0 10px 40px #0008,inset 0 1px 0 #38bdf822;backdrop-filter:blur(8px)}
+#stage{display:flex;justify-content:center;background:#02070f;border-radius:8px;padding:8px}
+canvas{max-width:100%;max-height:68vh;border:1px solid #38bdf866;border-radius:10px;background:var(--bg);box-shadow:0 0 40px #38bdf833,0 0 90px #38bdf811}
+button,select,input{background:#0d2745;color:var(--tx);border:1px solid var(--ln);border-radius:6px;padding:7px 11px;font:inherit}
+button{cursor:pointer;transition:.18s}button:hover{border-color:var(--cy);box-shadow:0 0 14px #38bdf855;transform:translateY(-1px)}button:active{transform:none}button:disabled{opacity:.5}button.on{background:linear-gradient(135deg,#7dd3fc,#38bdf8);color:#04121f;font-weight:700;box-shadow:0 0 16px #38bdf866}
+button.pri{background:linear-gradient(135deg,#fde68a,#fbbf24 55%,#f59e0b);color:#1b1200;font-weight:700;border-color:#fbbf24;box-shadow:0 4px 18px #fbbf2444}button.pri:hover{box-shadow:0 4px 26px #fbbf2488}
+.row{display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin:8px 0}
+input[type=range]{width:100%;padding:0}
+.bar{height:8px;background:#0d2745;border-radius:5px;overflow:hidden;box-shadow:inset 0 1px 3px #0008}.bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--cy),var(--am));box-shadow:0 0 12px #38bdf8}input[type=range]{accent-color:#fbbf24}label{letter-spacing:.12em;font-weight:600}
+#list button{display:block;width:100%;text-align:left;margin:5px 0;padding:9px 12px;border-radius:9px;background:#0a1f3a}#list small{display:block;margin-top:2px}
+#list small{color:var(--am)}
+details.sty{margin:10px 0;border:1px solid var(--ln);border-radius:10px;padding:8px 10px;background:#06152a}details.sty summary{cursor:pointer;color:var(--am)}.sty label{display:block}.sty .row label{display:inline-flex;gap:5px;align-items:center}.sty input[type=checkbox]{width:auto}label{font-size:12px;color:#8fb4d6}
+#modal,#modal2{position:fixed;inset:0;background:#000c;display:none;overflow:auto;padding:20px;z-index:9}
+#modal .in,#modal2 .in{max-width:900px;margin:auto;background:var(--pn);border:1px solid var(--cy);border-radius:10px;padding:16px}
+.pr{border:1px solid var(--ln);border-radius:8px;padding:10px;margin:10px 0}
+.pr textarea{width:100%;height:110px;background:#030a14;color:#a9d4f5;border:1px solid var(--ln);border-radius:6px;font:12px ui-monospace,monospace}
+.badge{display:inline-block;padding:3px 8px;border-radius:99px;border:1px solid var(--ln);margin:2px;font-size:12px}.badge.d{background:var(--am);color:#1b1200}
+</style><style id="pro">
+body{font-size:13px}
+header{padding:8px 16px;background:#061426dd;backdrop-filter:blur(6px);position:sticky;top:0;z-index:5}
+h1{font-size:13px;font-weight:700;letter-spacing:.16em;text-shadow:none}h1 span{text-shadow:none}
+main{grid-template-columns:minmax(0,1fr) 370px;gap:12px;padding:12px}
+.card{padding:12px;border-radius:12px}
+button,select,input{padding:5px 9px;border-radius:7px;font-size:12.5px}
+input[type=range]{padding:0;height:18px}
+.ctl{display:flex;gap:6px;align-items:center;margin-top:10px}.ctl input[type=range]{flex:1}
+.bar.thin{height:4px;margin-top:8px}
+.tabs{display:flex;gap:4px;margin-bottom:10px;border-bottom:1px solid var(--ln);padding-bottom:8px}
+.tabs button{flex:1;padding:6px 2px;border-color:transparent;background:transparent;color:#8fb4d6;font-weight:600}
+.tabs button.on{background:#0d2f55;color:#fff;border-color:var(--cy);box-shadow:none}
+.tp{display:none}.tp.on{display:block}
+.exp{margin-top:12px;border-top:1px solid var(--ln);padding-top:10px}
+.hint{font-size:11px;color:#8fb4d6;margin-top:6px;line-height:1.4}
+#list{max-height:46vh;overflow:auto;margin-bottom:6px}
+#list button{display:flex;justify-content:space-between;align-items:baseline;gap:8px;padding:7px 10px;margin:3px 0}
+#list small{font-size:11px;margin:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:55%}
+label{font-size:11px;margin-top:6px;display:block}
+.row{margin:6px 0}.row label{display:inline-flex;gap:5px;align-items:center;margin:0}
+input[type=checkbox]{width:auto}
+#fmt{display:grid;grid-template-columns:1fr 1fr}
+aside.card{position:sticky;top:50px;align-self:start}
+canvas{max-height:72vh}
+@media(max-width:960px){aside.card{position:static}}
+</style><style id="mob">
+html{-webkit-text-size-adjust:100%;-webkit-tap-highlight-color:transparent}
+button,.tabs button,#list button{touch-action:manipulation}
+@media(max-width:960px){
+ body{font-size:14px;padding-bottom:env(safe-area-inset-bottom)}
+ header{padding:8px 12px;padding-top:calc(8px + env(safe-area-inset-top));gap:4px}
+ h1{font-size:11px;letter-spacing:.1em}
+ #stat{font-size:10px}
+ main{display:block;padding:8px;padding-left:max(8px,env(safe-area-inset-left));padding-right:max(8px,env(safe-area-inset-right))}
+ main>section.card{position:sticky;top:calc(38px + env(safe-area-inset-top));z-index:4;padding:8px;margin-bottom:8px;background:#071428f2}
+ aside.card{position:static;padding:10px;margin-bottom:16px}
+ #stage{padding:4px}
+ canvas{max-height:44vh;max-width:100%}
+ .ctl{gap:8px;margin-top:8px}
+ .ctl button{min-width:44px;min-height:44px;font-size:15px}
+ #bp{flex:0 0 auto;padding:0 14px}
+ .ctl select{min-height:44px;max-width:124px;font-size:13px}
+ input[type=range]{height:32px}
+ input[type=range]::-webkit-slider-thumb{width:24px;height:24px}
+ input[type=range]::-moz-range-thumb{width:24px;height:24px}
+ button,select,input:not([type=checkbox]):not([type=range]):not([type=color]),textarea{min-height:44px;font-size:16px}
+ input[type=checkbox]{width:22px;height:22px;min-height:0}
+ input[type=color]{min-height:44px!important;width:56px!important}
+ .tabs{position:sticky;top:0;overflow-x:auto;gap:4px;background:#0a1a30;z-index:3;padding-bottom:6px}
+ .tabs button{min-height:44px;font-size:13px;white-space:nowrap;padding:6px 8px}
+ #list{max-height:none;overflow:visible}
+ #list button{min-height:48px;padding:10px 12px}
+ #list small{font-size:11px;max-width:48%}
+ .row{gap:8px}.row label{min-height:36px;font-size:13px}
+ .hint{font-size:12px}
+ #fmt{gap:8px}
+ #fmt button,#fps button{min-height:46px}
+ .exp{position:sticky;bottom:0;background:#0a1a30f5;margin:12px -10px -10px;padding:10px;padding-bottom:calc(10px + env(safe-area-inset-bottom));border-radius:0 0 12px 12px;z-index:3;box-shadow:0 -8px 20px #0009}
+ #dl{min-height:48px;font-size:15px}
+ #modal,#modal2{padding:0;background:var(--pn)}
+ #modal .in,#modal2 .in{max-width:none;min-height:100%;border:0;border-radius:0;padding:12px;padding-top:calc(12px + env(safe-area-inset-top));padding-bottom:calc(24px + env(safe-area-inset-bottom))}
+ .pr textarea{height:140px;font-size:13px;min-height:0}
+}
+@media(max-width:960px) and (orientation:landscape){
+ main>section.card{position:static}
+ canvas{max-height:70vh}
+}
+@media(max-width:380px){.tabs button{font-size:12px;padding:6px 4px}}
+</style>
+</head><body>
+<header><h1 class="mono">BLUEPRINTS <span>OF THE WORLD</span> — STORY VIDEO STUDIO</h1><span class="mono" id="stat" style="color:#8fb4d6">READY</span></header>
+<main>
+<section class="card"><div id="stage"><canvas id="cv"></canvas></div>
+<div class="ctl"><button id="bp" class="pri">▶ Play</button><button id="br" title="Restart">⟲</button><input type="range" id="scr" min="0" max="1000" value="0" title="Scrub"><select id="sp" title="Playback speed"><option value="1">1x Normal</option><option value="1.5">⚡ 1.5x Fast</option><option value="2">🚀 2x Turbo</option></select></div>
+<div class="bar thin"><i id="prog"></i></div></section>
+<aside class="card">
+<div class="tabs"><button data-t="t1" class="on">📚 Stories</button><button data-t="t2">🎬 Video</button><button data-t="t3">🎙 Voice</button><button data-t="t4">🎨 Style</button></div>
+<div class="tp on" id="t1"><div id="list"></div><div class="row"><button id="ed" class="pri" style="flex:1">✏️ Edit Text</button><button id="an" style="flex:1">Auto-Next: Off</button></div><button id="pm" style="width:100%">📋 9 Prompts (100 Total)</button></div>
+<div class="tp" id="t2"><label>FORMAT</label><div class="row" id="fmt"></div><label>FRAME RATE</label><div class="row" id="fps"><button data-f="30" class="on" style="flex:1">Fast 30fps</button><button data-f="60" style="flex:1">Smooth 60fps</button></div>
+<label>SCENE LENGTH (shorter ↔ longer)</label><input type="range" id="c_pace" min="70" max="160" value="100">
+<div class="row"><label><input type="checkbox" id="c_in"> Intro card</label><label><input type="checkbox" id="c_out"> Outro card</label><label><input type="checkbox" id="c_fx"> Animation effects</label></div></div>
+<div class="tp" id="t3"><label>GEMINI API KEY (optional)</label><div class="row"><input id="key" type="password" placeholder="AIza..." style="flex:1;min-width:0"><button id="eye">Show</button></div>
+<div class="row"><select id="voice" style="flex:1"></select><select id="gap" title="Pause between voice requests" style="flex:1"><option value="21" selected>Free key: safe pace</option><option value="0">Paid key: fast</option></select></div>
+<button id="gen" style="width:100%">🎙 Generate Voiceover</button><div class="mono hint">Without a key, soft chimes are used. Finished clips are kept if you stop or hit a limit.</div></div>
+<div class="tp" id="t4"><label>SUBTITLE SIZE</label><input type="range" id="c_sz" min="70" max="140" value="100">
+<div class="row"><select id="c_pos" style="flex:1"><option value="b">Subtitles: Standard</option><option value="h">Subtitles: Higher</option><option value="l">Subtitles: Lower</option></select><label>Highlight</label><input type="color" id="c_hl" value="#fbbf24" style="padding:0;width:40px;height:28px"></div>
+<input id="c_name" placeholder="Your page name (watermark)" style="width:100%">
+<div class="row"><label><input type="checkbox" id="c_mu"> Background music</label><input type="range" id="c_mv" min="0" max="100" value="40" style="flex:1"></div>
+<button id="thumb" style="width:100%">🖼 Save Thumbnail (PNG)</button></div>
+<div class="exp"><button id="dl" class="pri" style="width:100%;padding:9px">⬇ Download Video</button><div class="bar thin" style="margin-top:8px"><i id="rp"></i></div><div class="mono hint" id="rt">Export idle</div></div>
+</aside></main>
+<div id="modal2"><div class="in" id="em"></div></div><div id="modal"><div class="in"><div class="row"><b class="mono" style="color:var(--cy);flex:1">9 PROMPTS → 90 MORE INVENTIONS</b><button id="mc">✕ Close</button></div>
+<div id="chk"></div><div id="prs"></div></div></div>
+<script>
+const $=id=>document.getElementById(id),TAU=Math.PI*2;
+let TINT=null;const NS=8,STG=[0,1,1,2,3,3,4,4];let cfg={sz:1,pos:"b",hl:"#fbbf24",name:"",intro:false,outro:false,pace:1,music:false,mv:.4,fx:true};try{Object.assign(cfg,JSON.parse(localStorage.getItem("ss")||"{}"))}catch(e){}
+const S=[
+["The Traffic Light",1923,"Garrett Morgan",["How can a tiny light keep a whole street safe? Let's find out together!", "Long ago, there were no traffic lights. Carts, cars, and people all moved at once.", "Garrett Morgan saw a car crash into a horse carriage. Nobody had time to stop.", "He built a signal with a warning position too, so everyone knew to slow down.", "A warning gives your eyes and brain time to see the light and press the brake.", "Imagine a ball rolling fast. You cannot stop it in one blink. You need a little time.", "Today, red means stop, green means go, and yellow means get ready. Cities run on this idea.", "One small warning made streets safer for everyone. Tiny ideas can protect people."],["Mystery: what stops a crash?","Flaw: no warning time","Change: add a pause","Force: time to brake","Result: one pause saves lives"]],
+["Potato Chips",1853,"George Crum",["Did you know an angry chef once created a famous snack? Here is the story.", "Long ago, fried potatoes were cut thick, and they came out soft and heavy.", "Legend says a guest kept sending his fries back. George Crum, the chef, got very annoyed.", "So Crum sliced potatoes paper-thin, fried them, and added salt, expecting the guest to be upset.", "Thin slices hold less water. Hot oil pulls it out fast, so the slice turns crunchy.", "Think of a wet sponge and a thin paper towel. The thin one dries much faster.", "The guest loved them! Today, people eat billions of bags of chips around the world.", "One thinner slice made a plain food special. Small changes can bring big surprises."],["Mystery: why so crunchy?","Flaw: thick means soft","Change: slice thinner","Science: less water, more crunch","Result: thin slice, giant snack"]],
+["Car Windshield Wipers",1903,"Mary Anderson",["Imagine driving in heavy rain and you cannot see anything. What would you do?", "Long ago, drivers had to stop, open the window, or wipe the glass by hand.", "Mary Anderson sat in a streetcar and saw the driver struggling in sleet. She wanted to help.", "She designed a rubber blade with a handle inside the car that swings across the glass.", "The soft blade pushes the water away, so you can see through clean glass again.", "It is like wiping a foggy window with your hand. One quick swipe clears the view.", "Today, every car has wipers, and many are automatic. Rainy roads are much safer.", "A simple blade solved a big problem. Seeing clearly can save lives."],["Mystery: how to see in rain?","Flaw: wet glass blocks view","Change: wipe from inside","Force: blade pushes water","Result: clear view, safer roads"]],
+["The Microwave Oven",1945,"Percy Spencer",["Can invisible waves cook your food? It sounds like magic, but it is science!", "Long ago, food cooked slowly, because heat had to travel from the outside to the middle.", "Percy Spencer worked with radar machines. The story goes that a candy bar melted in his pocket.", "Curious, he tried popcorn next, and it popped! So he built a box that uses those waves to cook.", "Microwaves make the tiny drops of water inside food shake very fast.", "Rub your hands together quickly. They get warm! Shaking creates heat in the same way.", "Today, microwave ovens heat dinner in minutes, so busy families can eat sooner.", "A melted candy bar led to a kitchen helper. Curious minds notice little surprises."],["Mystery: heat from nothing?","Flaw: ovens heat slowly","Change: use waves on purpose","Force: shaking water makes heat","Result: dinner in minutes"]],
+["Velcro Fastener",1941,"George de Mestral",["A walk in the woods gave us a fastener. How can a weed teach us?", "Long ago, clothes used buttons and laces. They can break, come loose, or take time.", "George de Mestral found sticky burrs on his dog and his pants. He wondered why they stuck.", "Under a microscope, he saw tiny hooks. So he made cloth with hooks on one side and loops on the other.", "Each hook grabs a loop. With thousands of them, the two sides hold together tightly.", "It is like thousands of tiny fingers holding hands. Pull gently from one edge and they let go.", "Today, this fastener closes shoes, bags, and jackets. Even astronauts use it in space.", "Nature already had a clever idea. Look closely, and you may find your next one."],["Mystery: why do burrs stick?","Flaw: zippers jam and break","Change: copy hooks and loops","Force: many hooks hold strong","Result: nature's idea, our fastener"]],
+["The Telephone",1876,"Alexander Graham Bell",["Can your voice travel through a wire? Let's see how sound can become electricity.", "Long ago, a faraway message meant a letter or telegraph clicks. Real voices could not travel.", "Alexander Graham Bell wanted people to hear each other, not just read clicks.", "He built a thin plate that shakes with your voice and turns the shaking into an electric signal.", "The signal runs through a wire. At the other end, another plate shakes and makes the sound again.", "It is like shaking one end of a long rope. The shake travels all the way to the other end.", "Today, phones carry voices across the whole world in a moment.", "One clever plate helped people talk across distance. Ideas about sound changed how we connect."],["Mystery: can wires carry voice?","Flaw: clicks, not voices","Change: plate turns shake to signal","Force: shake becomes electric current","Result: instant talk across distance"]],
+["The Light Bulb",1879,"Thomas Edison",["How can a thin thread glow all night without catching fire?", "Long ago, candles and oil lamps gave dim light. They made smoke and could start fires.", "Thomas Edison wanted light that was safer and steadier. So he tested many different materials.", "He put a thin carbon thread inside a glass bulb with almost no air.", "Electricity makes the thread so hot that it shines. With no air inside, it cannot burn quickly.", "Think of a campfire. Fire needs air. Take away the air, and the fire cannot grow.", "Today, bulbs light homes, schools, and streets, so people can read and work after dark.", "Many tries, one bright idea. Never giving up can light up the world."],["Mystery: light without fire?","Flaw: lamps smoke and flicker","Change: thread in a vacuum","Force: current heats thread","Result: night becomes useful"]],
+["The Airplane",1903,"The Wright Brothers",["Why can a heavy plane stay in the sky? The secret is not only power.", "Long ago, people built flying machines with wings, but they wobbled and crashed.", "Wilbur and Orville Wright watched birds. They saw that birds tilt their wings to turn and stay balanced.", "So they built wings that could twist a little, which gave pilots control.", "A wing is curved. It pushes air downward, and the air pushes the wing upward.", "Stick your hand out of a car window and tilt it. Feel your hand rise and fall.", "Today, planes connect cities everywhere, so people can travel far in just hours.", "Power helps a plane fly, but control keeps it safe. Smart steering changed the sky."],["Mystery: what was missing?","Flaw: power without balance","Change: twist the wing tips","Force: air pushed down, lift up","Result: control unlocks flight"]],
+["The Printing Press",1440,"Johannes Gutenberg",["Why were books once as rare as treasure? A tiny metal letter changed that.", "Long ago, every book was copied by hand. One book could take months to finish.", "Johannes Gutenberg saw that this was slow and costly, so very few people could read.", "He made small metal letters that could be moved, lined up, and used again and again.", "Letters are placed in rows, covered with ink, and pressed onto paper. Every page comes out the same.", "It is like a set of stamps. Rearrange the stamps, and you can print a new message.", "Today, books are cheap, so students everywhere can learn from them.", "Reusing small pieces made knowledge spread fast. Sharing ideas helps the whole world grow."],["Mystery: why were books rare?","Flaw: hand copying is slow","Change: reusable letters","Force: press and ink repeat","Result: books for everyone"]],
+["The Bicycle",1817,"Karl von Drais",["Two wheels in a line should fall over. So why does a bicycle stay up?", "Long ago, people walked or used horses. After bad harvests, horses had little food.", "Karl von Drais wanted a machine that did not need a horse.", "He built a wooden frame with two wheels, so riders could push along the ground with their feet.", "When the wheels roll, a small turn of the handle keeps the bike under you.", "It is like balancing a stick on your finger. You move a little to keep it up.", "Later, pedals were added. Today, bicycles are cheap, healthy, and good for the planet.", "A simple two-wheel idea took people farther. Small steps can carry you a long way."],["Mystery: why doesn't it fall?","Flaw: horses need food","Change: two wheels, one frame","Force: steering keeps balance","Result: cheap travel for all"]]];
+const DEF=JSON.parse(JSON.stringify(S));try{const o=JSON.parse(localStorage.getItem("se")||"{}");Object.keys(o).forEach(k=>{if(S[k]&&o[k][3]&&o[k][3].length==NS)S[k]=o[k]})}catch(e){}
+const FM={"9:16 Reels/Shorts":[1080,1920],"16:9 YouTube":[1920,1080],"1:1 Square":[1080,1080],"4:5 Feed":[1080,1350]};
+const V=["Puck","Charon","Kore","Fenrir","Aoede","Zephyr"];
+const cv=$("cv"),c=cv.getContext("2d",{alpha:false});c.imageSmoothingEnabled=true;c.imageSmoothingQuality="high";
+let st={i:0,t:0,play:false,speed:1,fps:30,fmt:"9:16 Reels/Shorts",scene:-1,rec:null,dur:[],voice:{},last:0,ac:null,dest:null,src:[]};
+// ---------- audio ----------
+function audio(){if(!st.ac){st.ac=new (window.AudioContext||window.webkitAudioContext)();st.dest=st.ac.createMediaStreamDestination()}if(st.ac.state=="suspended")st.ac.resume();return st.ac}
+function out(n){n.connect(st.ac.destination);n.connect(st.dest)}
+function chime(k){const a=audio(),t0=a.currentTime;[0,4,7].forEach((s,j)=>{const o=a.createOscillator(),g=a.createGain();o.type=j?"sine":"triangle";o.frequency.value=440*Math.pow(2,(s+k*2)/12);g.gain.setValueAtTime(0,t0+j*.07);g.gain.linearRampToValueAtTime(.12,t0+j*.07+.02);g.gain.exponentialRampToValueAtTime(.001,t0+j*.07+.7);o.connect(g);out(g);o.start(t0+j*.07);o.stop(t0+1)});
+ const b=a.createBufferSource(),n=a.createBuffer(1,1200,a.sampleRate),d=n.getChannelData(0);for(let i=0;i<1200;i++)d[i]=(Math.random()*2-1)*(1-i/1200)*.25;b.buffer=n;out(b);b.start(t0)}
+function stopSrc(){st.src.forEach(s=>{try{s.stop()}catch(e){}});st.src=[];st.vi=null}
+function onScene(k,off=0){stopSrc();if(!st.play)return;audio();const v=st.voice[st.i+"_"+k];if(off<.3)chime(k);if(v){const s=st.ac.createBufferSource();s.buffer=v;s.playbackRate.value=st.speed;out(s);const o2=Math.min(off,Math.max(0,v.duration-.05));s.start(0,o2);st.vi={t:st.ac.currentTime,off:o2,k:st.i+"_"+k};st.src.push(s)}}
+// ---------- timing ----------
+function durs(){return [...Array(NS).keys()].map(k=>{const v=st.voice[st.i+"_"+k];return (v?Math.max(4,v.duration+1):cfg.pace*Math.max(5.5,S[st.i][3][k].split(" ").length*.42+1.8))/st.speed})}
+function cardD(){return{i:cfg.intro?2.5/st.speed:0,o:cfg.outro?3.5/st.speed:0}}
+function total(){const C=cardD();return C.i+durs().reduce((a,b)=>a+b,0)+C.o}
+function locate(t){const C=cardD();if(C.i&&t<C.i)return{k:0,card:"i",l:t/C.i,d:C.i};const d=durs();let a=C.i;for(let k=0;k<NS;k++){if(t<a+d[k])return{k,l:(t-a)/d[k],d:d[k]};a+=d[k]}return C.o&&t>=a?{k:NS-1,card:"o",l:Math.min(1,(t-a)/C.o),d:C.o}:{k:NS-1,l:1,d:d[NS-1]}}
+// ---------- illustrations ----------
+const L=(x,y)=>c.lineTo(x,y),M=(x,y)=>c.moveTo(x,y);
+function stroke(col,w){c.strokeStyle=col||TINT||"#38bdf8";c.lineWidth=w||5;c.lineCap=c.lineJoin="round"}
+function glow(col,b){c.shadowColor=col;c.shadowBlur=b}
+function circ(x,y,r,f){c.beginPath();c.arc(x,y,r,0,TAU);f?c.fill():c.stroke()}
+const ILL=[
+(T,u)=>{stroke();c.strokeRect(-u*1.2,-u*3,u*2.4,u*6);c.beginPath();M(0,u*3);L(0,u*5);c.stroke();const a=Math.floor(T/1.1)%3,col=["#ef4444","#fbbf24","#22c55e"];
+ for(let i=0;i<3;i++){c.fillStyle=i==a?col[i]:col[i]+"33";c.save();if(i==a)glow(col[i],40);circ(0,-u*2+i*2*u*.97,u*.8,1);c.restore()}
+ c.fillStyle="#38bdf8";c.font=u*.5+"px monospace";c.textAlign="center";c.fillText(["STOP","WAIT","GO"][a],0,u*6.2)},
+(T,u)=>{stroke("#fbbf24");for(let i=0;i<5;i++){const r=T*.5+i*1.3;c.save();c.translate((i-2)*u*1.5,Math.sin(T*2+i)*u*.4);c.rotate(Math.sin(r)*.4);c.beginPath();for(let a=0;a<=TAU+.1;a+=.2){const w=1+.18*Math.sin(a*5+T*3);c.lineTo(Math.cos(a)*u*.8*w,Math.sin(a)*u*.55*w)}c.closePath();c.fillStyle="#fbbf2433";c.fill();c.stroke();c.restore()}
+ stroke();c.beginPath();M(-u*4,u*2);c.quadraticCurveTo(0,u*4.5,u*4,u*2);c.stroke();for(let i=0;i<8;i++){circ(-u*3+i*u*.85,u*3+Math.sin(T*4+i)*u*.2,u*.12+(i%3)*u*.05)}},
+(T,u)=>{stroke();c.beginPath();c.arc(0,u*2.5,u*5,Math.PI*1.1,Math.PI*1.9);c.stroke();const g=Math.sin(T*2.2)*.6;c.save();c.translate(0,u*3);c.rotate(g);stroke("#fbbf24",u*.25);c.beginPath();M(0,0);L(0,-u*4.5);c.stroke();c.restore();circ(0,u*3,u*.3);
+ stroke("#38bdf8aa",2);for(let i=0;i<14;i++){const x=((i*97)%100)/100*u*8-u*4,y=((T*3+i*.37)%1)*u*5-u*2;c.beginPath();M(x,y);L(x-u*.1,y+u*.4);c.stroke()}},
+(T,u)=>{stroke();c.strokeRect(-u*3.5,-u*2,u*7,u*4.5);c.strokeRect(-u*2.8,-u*1.4,u*4,u*3.2);c.beginPath();M(u*1.7,-u*1.2);L(u*1.7,u*2);c.stroke();circ(u*2.5,-u*.5,u*.35);
+ stroke("#fbbf24",2);for(let j=0;j<3;j++){c.beginPath();for(let x=-u*5.5;x<-u*3.5;x+=4)L(x,-u*1+j*u*1.1+Math.sin(x*.05-T*8)*u*.25);c.stroke()}
+ c.fillStyle="#fff7d6";for(let i=0;i<7;i++){const x=-u*2.2+i*u*.5,y=u*1.4-Math.abs(Math.sin(T*3+i*1.7))*u*1.3;circ(x,y,u*.22,1)}},
+(T,u)=>{const g=u*.8*(1+Math.sin(T*1.5)),n=6;stroke();for(let i=0;i<n;i++){const x=(i-2.5)*u*1.5;c.beginPath();M(x-u*.6,-u*2-g);L(x-u*.6,-u*1.2-g);c.stroke();c.beginPath();M(x+u*.2,-u*2-g);c.quadraticCurveTo(x+u*.6,-u*1.6-g,x+u*.2,-u*1.2-g);c.stroke()}
+ stroke("#fbbf24");c.strokeRect(-u*4.4,-u*2.4-g,u*8.8,u*.4);for(let i=0;i<n;i++){const x=(i-2.5)*u*1.5+u*.5;c.beginPath();M(x-u*.6,u*1.2+g);c.bezierCurveTo(x-u*.6,u*.4+g,x+u*.6,u*.4+g,x+u*.6,u*1.2+g);c.stroke()}c.strokeRect(-u*4.4,u*2+g,u*8.8,u*.4)},
+(T,u)=>{stroke();[-1,1].forEach(s=>{c.save();c.translate(s*u*3.5,u*1.5);c.scale(s,1);c.beginPath();M(-u,-u*2);L(u*.5,-u*2);L(u,u);L(-u*.5,u);c.closePath();c.stroke();c.restore()});
+ c.fillStyle="#38bdf8";c.beginPath();c.moveTo(-u*3,-u*.7);c.quadraticCurveTo(0,u*1.6,u*3,-u*.7);c.stroke();stroke("#fbbf24",2);for(let i=0;i<4;i++){const r=((T*.8+i*.25)%1);c.globalAlpha=1-r;circ(-u*3.5,-u*.5,u*.8+r*u*2.5);circ(u*3.5,-u*.5,u*.8+r*u*2.5);c.globalAlpha=1}
+ c.save();c.translate(0,-u*3);c.rotate(Math.sin(T*18)*.15);stroke("#38bdf8",3);c.beginPath();c.arc(0,0,u*.8,Math.PI,0);L(u*.8,u*.4);L(-u*.8,u*.4);c.closePath();c.stroke();c.restore()},
+(T,u)=>{const p=.6+.4*Math.sin(T*3);stroke();c.beginPath();c.arc(0,-u,u*2.3,Math.PI*.78,Math.PI*2.22);c.stroke();c.strokeRect(-u*.9,u*2.1,u*1.8,u*1.6);glow("#fbbf24",50*p);c.fillStyle="rgba(251,191,36,"+(.15+.2*p)+")";circ(0,-u,u*2.1,1);stroke("#fbbf24",3);c.beginPath();M(-u*.5,u*2.1);L(-u*.5,0);for(let i=0;i<5;i++)L(-u*.5+(i%2?0:u),-u*(i*.35));c.stroke();c.shadowBlur=0;
+ for(let i=0;i<12;i++){const a=i*TAU/12;c.beginPath();M(Math.cos(a)*u*3.2,-u+Math.sin(a)*u*3.2);L(Math.cos(a)*u*(3.6+p*.6),-u+Math.sin(a)*u*(3.6+p*.6));c.stroke()}},
+(T,u)=>{c.save();c.translate(0,Math.sin(T*2)*u*.4);stroke();c.beginPath();M(-u*4.5,0);c.quadraticCurveTo(-u*4.7,-u*.8,-u*3.5,-u*.8);L(u*3,-u*.6);L(u*4.5,-u*.2);L(u*3,u*.5);L(-u*3.5,u*.4);c.closePath();c.stroke();stroke("#fbbf24");c.strokeRect(-u*2.2,-u*2.2,u*3,u*.25);c.strokeRect(-u*2.2,u*1.8,u*3,u*.25);c.beginPath();M(-u*.8,-u*2);L(-u*.8,u*2);c.stroke();
+ c.save();c.translate(u*4.7,-u*.2);for(let i=0;i<2;i++){c.rotate(T*25+i*Math.PI/2);c.beginPath();M(0,-u*1.5);L(0,u*1.5);c.stroke()}c.restore();c.restore();stroke("#38bdf855",2);for(let i=0;i<4;i++){const x=((i*70-T*200)%280+280)%280-140;c.beginPath();M(x*u*.04-u*3,u*3.5+i*u*.4);L(x*u*.04+u,u*3.5+i*u*.4);c.stroke()}},
+(T,u)=>{const d=(Math.sin(T*2)+1)/2;stroke();c.beginPath();M(-u*3,-u*4);L(-u*3,u*4);M(u*3,-u*4);L(u*3,u*4);c.stroke();c.strokeRect(-u*3.2,-u*4.2,u*6.4,u*.5);stroke("#fbbf24",u*.3);c.beginPath();M(0,-u*3.7);L(0,-u*1+d*u*2.4);c.stroke();c.strokeRect(-u*2.2,-u+d*u*2.4,u*4.4,u*.5);
+ stroke();c.strokeRect(-u*2.2,u*2.2,u*4.4,u*.4);c.fillStyle="#38bdf8";c.font=u*.55+"px monospace";c.textAlign="center";"ABCDEFG".split("").forEach((ch,i)=>c.fillText(ch,(i-3)*u*.65,u*2.1));c.fillStyle="#fff";c.globalAlpha=d>.9?1:.15;c.fillRect(-u*2.2,u*2.7,u*4.4,u*.15);c.globalAlpha=1},
+(T,u)=>{const r=T*3;stroke();[-1,1].forEach(s=>{c.save();c.translate(s*u*2.6,u*1.6);circ(0,0,u*2,0);c.rotate(r);for(let i=0;i<8;i++){c.beginPath();M(0,0);L(Math.cos(i*TAU/8)*u*2,Math.sin(i*TAU/8)*u*2);c.stroke()}c.restore()});
+ stroke("#fbbf24",u*.25);c.beginPath();M(-u*2.6,u*1.6);L(-u*1.2,-u*.8);L(u*1.4,-u*.8);L(u*2.6,u*1.6);M(-u*1.2,-u*.8);L(-u*2.2,-u*1.6);c.stroke();c.strokeRect(-u*.6,-u*1.3,u*1.8,u*.35);
+ stroke("#38bdf855",2);for(let i=0;i<6;i++){const x=((i*u*2-T*u*5)%(u*12)+u*12)%(u*12)-u*6;c.beginPath();M(x,u*3.8);L(x+u,u*3.8);c.stroke()}}];
+function drawIll(sc,T,u,fade,s){const k=STG[sc.k],f=ILL[st.i],p=Math.min(1,sc.l*1.5),pl=.6+.4*Math.sin(T*5);
+ const pass=(al,gb,gc)=>{c.save();c.globalAlpha=al*fade;if(gb)glow(gc||FXC[st.i],gb);f(T,u,k);c.restore()};
+ c.save();c.textAlign="center";
+ if(!cfg.fx){pass(1,22);pass(1,0)}else if(k==0){pass(.22,0);const rv=REV[st.i];c.save();c.beginPath();if(rv==0)c.rect(-u*8,-u*8,u*16*p,u*16);else if(rv==1)c.rect(-u*8,u*8-u*16*p,u*16,u*16*p);else if(rv==2)c.arc(0,0,u*7.5*p,0,TAU);else for(let n=0;n<8;n++)c.rect(-u*8,-u*8+n*u*2,u*16,u*2*p);c.clip();pass(.5,26);pass(1,0);c.restore();c.strokeStyle="#fbbf24";c.lineWidth=3*s;c.beginPath();if(rv==0){const x=-u*8+u*16*p;M(x,-u*5.5);L(x,u*5.5)}else if(rv==1){const y=u*8-u*16*p;M(-u*5.5,y);L(u*5.5,y)}else if(rv==2)c.arc(0,0,u*7.5*p,0,TAU);c.stroke();c.fillStyle="#fbbf24";c.globalAlpha=(1-p)*fade;c.font="800 "+u*2.4+"px monospace";c.fillText("?",0,u*.8)}
+ else if(k==1){c.translate(st.i%2?0:Math.sin(T*35)*u*.05,st.i%2?Math.sin(T*35)*u*.05:0);pass(1,22,"#ef4444");pass(1,0);c.strokeStyle="#ef4444";c.lineWidth=4*s;c.setLineDash([u*.5,u*.4]);c.globalAlpha=(.5+.5*pl)*fade;c.beginPath();c.arc(0,0,u*5.4,0,TAU);c.stroke();c.setLineDash([]);c.lineWidth=8*s;c.beginPath();M(u*3.6,-u*5);L(u*5,-u*3.6);M(u*5,-u*5);L(u*3.6,-u*3.6);c.stroke()}
+ else if(k==2){pass(.28,0);TINT="#fbbf24";pass(1,34*pl,"#fbbf24");pass(1,0);TINT=null;c.strokeStyle="#fbbf24";c.lineWidth=4*s;c.globalAlpha=fade;c.beginPath();c.arc(0,0,u*5.4*(1+.02*pl),0,TAU);c.stroke();}
+ else if(k==3){pass(1,18);pass(1,0);c.strokeStyle=FXC[st.i];c.lineWidth=3*s;const mm=st.i%3;for(let n=0;n<4;n++){const q=(T*.5+n/4)%1,r=u*(1.5+q*4.5);c.globalAlpha=(1-q)*.7*fade;c.beginPath();if(mm==0)c.arc(0,0,r,0,TAU);else if(mm==1)c.rect(-r,-r,2*r,2*r);else{M(-u*5.5,(q*2-1)*u*5);L(u*5.5,(q*2-1)*u*5)}c.stroke()}c.globalAlpha=fade;c.fillStyle="#fbbf24";for(let n=0;n<6;n++){const q=(T*.6+n/6)%1;circ(-u*5.2+q*u*10.4,u*5.4,u*.18,1)}}
+ else{pass(1,24,"#22c55e");pass(1,0);c.fillStyle="#22c55e";c.globalAlpha=fade;circ(u*4.2,-u*4.2,u*.9,1);c.strokeStyle="#04121f";c.lineWidth=u*.22;c.beginPath();M(u*3.8,-u*4.2);L(u*4.1,-u*3.8);L(u*4.7,-u*4.7);c.stroke();c.fillStyle=FXC[st.i];for(let n=0;n<10;n++){const a=n*2.4,r=u*(3+(n%3)*.8);c.globalAlpha=(.4+.6*Math.abs(Math.sin(T*3+n)))*fade;circ(Math.cos(a)*r,Math.sin(a)*r,u*.1+u*.06*(n%2),1)}}
+ c.restore()}
+function musicStart(){if(!cfg.music||st.mus)return;const a=audio(),g=a.createGain();g.gain.value=cfg.mv*.12;const os=[110,164.8,220,277.2].map((f,i)=>{const o=a.createOscillator();o.type=i%2?"sine":"triangle";o.frequency.value=f;o.detune.value=i*4;o.connect(g);o.start();return o});const l=a.createOscillator(),lg=a.createGain();l.frequency.value=.15;lg.gain.value=cfg.mv*.04;l.connect(lg);lg.connect(g.gain);l.start();out(g);st.mus={os,g,l}}
+function musicStop(){const m=st.mus;if(!m)return;st.mus=null;m.g.gain.setTargetAtTime(0,st.ac.currentTime,.15);setTimeout(()=>{m.os.forEach(o=>o.stop());m.l.stop();try{m.g.disconnect()}catch(e){}},700)}
+function cardOv(sc,W,H,s){if(!sc.card)return;const sto=S[st.i],nx=S[(st.i+1)%S.length],T=st.t,al=sc.card=="i"?Math.min(1,(1-sc.l)*sc.d/.4):Math.min(1,sc.l*sc.d/.4);
+ c.save();c.globalAlpha=al;const g=c.createRadialGradient(W/2,H/2,0,W/2,H/2,Math.max(W,H)*.7);g.addColorStop(0,"#0b2a4e");g.addColorStop(1,"#02070f");c.fillStyle=g;c.fillRect(0,0,W,H);c.textAlign="center";
+ const ctr=(t,y,fs,col,mw)=>{const f="800 "+fs+"px Segoe UI,Inter,system-ui,sans-serif";c.font=f;c.fillStyle=col;const ls=wrap(t,mw,f);ls.forEach((l,j)=>c.fillText(l.map(w=>w.x).join(" "),W/2,y+j*fs*1.2));return y+ls.length*fs*1.2};
+ const pu=.6+.4*Math.sin(T*5);c.shadowColor="#38bdf8";c.shadowBlur=30*s;
+ if(sc.card=="i"){let y=ctr("BLUEPRINTS OF THE WORLD",H*.32,38*s,"#38bdf8",W*.85);y=ctr(sto[0],y+50*s,100*s,"#ffffff",W*.84);c.shadowBlur=0;y=ctr(sto[1]+"  •  "+sto[2].toUpperCase(),y+30*s,40*s,"#fbbf24",W*.85);c.globalAlpha=al*pu;ctr("▶ WATCH TILL THE END",y+90*s,36*s,"#bfe3ff",W*.85)}
+ else{let y=ctr("NEXT UP",H*.36,60*s,"#fbbf24",W*.85);y=ctr(nx[0],y+30*s,100*s,"#ffffff",W*.84);c.shadowBlur=0;c.globalAlpha=al*pu;y=ctr("FOLLOW & SUBSCRIBE FOR MORE",y+80*s,40*s,"#38bdf8",W*.85);c.globalAlpha=al;if(cfg.name)ctr("@"+cfg.name.replace(/^@/,""),y+50*s,34*s,"#bfe3ff",W*.85)}
+ c.restore()}
+const FXC=["#22c55e","#fbbf24","#7dd3fc","#fb923c","#a78bfa","#38bdf8","#fde047","#93c5fd","#e5e7eb","#34d399"],REV=[0,2,1,0,3,2,1,0,3,2];
+const rnd=n=>{const x=Math.sin(n*127.1)*43758.5453;return x-Math.floor(x)};
+function ambient(T,W,H,s){const i=st.i;c.save();c.strokeStyle=c.fillStyle=FXC[i];c.lineWidth=2*s;
+ if(i==0){for(let n=0;n<14;n++){c.globalAlpha=.3;c.fillStyle=["#ef4444","#fbbf24","#22c55e"][n%3];c.fillRect(((T*(220+rnd(n)*300)*s+n*310)%(W+500))-250,H*(.12+.76*rnd(n+9)),140*s,5*s)}}
+ else if(i==1){for(let n=0;n<22;n++){c.globalAlpha=.35;c.beginPath();c.arc(W*rnd(n)+Math.sin(T*2+n)*12*s,H-((T*70+n*H/22)%H),(5+12*rnd(n+3))*s,0,TAU);c.stroke()}}
+ else if(i==2){c.strokeStyle="#7dd3fc";for(let n=0;n<40;n++){const x=W*rnd(n),y=((T*520+n*97)%(H+120))-60;c.globalAlpha=.3;c.beginPath();c.moveTo(x,y);c.lineTo(x-14*s,y+46*s);c.stroke()}}
+ else if(i==3){for(let n=0;n<4;n++){const q=(T*.4+n/4)%1;c.globalAlpha=(1-q)*.35;c.beginPath();c.arc(W/2,H*.4,q*W*.75,0,TAU);c.stroke()}for(let n=0;n<14;n++){c.globalAlpha=.5*Math.abs(Math.sin(T*3+n));c.fillRect(W*rnd(n),H*rnd(n+5),5*s,5*s)}}
+ else if(i==4){for(let n=0;n<26;n++){const x=W*rnd(n)+Math.sin(T+n)*20*s,y=H*rnd(n+7)+Math.cos(T*.8+n)*20*s;c.globalAlpha=.4;c.beginPath();c.arc(x,y,12*s,Math.PI*(1+T*.2+n),Math.PI*(2+T*.2+n)+.4);c.stroke()}}
+ else if(i==5){for(let j=0;j<4;j++){c.globalAlpha=.3;c.beginPath();for(let x=0;x<=W;x+=12)c.lineTo(x,H*(.12+.2*j)+Math.sin(x*.012+T*3+j)*30*s);c.stroke()}}
+ else if(i==6){c.save();c.globalAlpha=.07;c.translate(W/2,H*.4);c.rotate(T*.1);for(let n=0;n<16;n++){c.rotate(TAU/16);c.fillRect(0,-8*s,W,16*s)}c.restore();c.globalAlpha=.03+.03*Math.sin(T*8);c.fillRect(0,0,W,H)}
+ else if(i==7){c.fillStyle="#fff";for(let n=0;n<6;n++){const x=W-((T*40*s*(1+n*.3)+n*320)%(W+400)),y=H*(.1+.14*n);c.globalAlpha=.07;for(let m=0;m<3;m++){c.beginPath();c.arc(x+m*50*s,y+(m%2)*14*s,50*s,0,TAU);c.fill()}c.globalAlpha=.25;c.fillRect(W-((T*700+n*400)%(W+300)),H*(.2+.12*n),120*s,3*s)}}
+ else if(i==8){c.font=34*s+"px ui-monospace,monospace";c.textAlign="center";for(let n=0;n<18;n++){c.globalAlpha=.2;c.fillText("ABCDEFGHIJKLMNOPQRSTUVWXYZ"[Math.floor(rnd(n+2)*26)],W*rnd(n),(T*50*s+n*H/18)%H)}}
+ else{for(let n=0;n<18;n++){c.globalAlpha=.28;c.fillRect(W-((T*(500+rnd(n)*400)*s+n*210)%(W+300)),H*(.1+.8*rnd(n+4)),(60+120*rnd(n+8))*s,3*s)}}
+ c.restore()}
+// ---------- render ----------
+function wrap(txt,W,f){c.font=f;const w=txt.split(" "),ls=[];let cur=[],cw=0;const sp=c.measureText(" ").width;w.forEach(x=>{const m=c.measureText(x).width;if(cw+m>W&&cur.length){ls.push(cur);cur=[];cw=0}cur.push({x,m});cw+=m+sp});if(cur.length)ls.push(cur);return ls}
+const wgt=w=>{const sy=Math.max(1,(w.toLowerCase().replace(/[^a-z]/g,"").match(/[aeiouy]+/g)||[]).length);return sy*2+1+(/[,;:]$/.test(w)?2:0)+(/[.!?]$/.test(w)?4:0)};
+function render(){const W=cv.width,H=cv.height,s=Math.min(W,H)/1080,T=st.t,sc=locate(T),sto=S[st.i];
+ const sid=sc.card=="i"?-1:sc.card=="o"?NS:sc.k;if(sid!=st.scene){st.scene=sid;onScene(sid,sc.card?0:sc.l*sc.d*st.speed)}
+ const bg=c.createRadialGradient(W/2,H*.4,0,W/2,H*.4,Math.max(W,H)*.75);bg.addColorStop(0,"#0b2a4e");bg.addColorStop(.55,"#061528");bg.addColorStop(1,"#02070f");c.fillStyle=bg;c.fillRect(0,0,W,H);c.save();c.strokeStyle="#1b5a9a44";c.lineWidth=1;const g=60*s,off=(T*8*s)%g;c.beginPath();for(let x=off;x<W;x+=g){M(x,0);L(x,H)}for(let y=off;y<H;y+=g){M(0,y);L(W,y)}c.stroke();c.restore();
+ c.fillStyle="#38bdf822";for(let i=0;i<40;i++){circ(((i*173)%W+Math.sin(T+i)*20)%W,(H-((T*30+i*97)%H)),2*s,1)}
+ c.fillStyle="#38bdf808";c.fillRect(0,(T*120*s)%H,W,4*s);if(cfg.fx)ambient(T,W,H,s);
+ c.strokeStyle="#38bdf8";c.lineWidth=3*s;const m=36*s,q=60*s;[[m,m,1,1],[W-m,m,-1,1],[m,H-m,1,-1],[W-m,H-m,-1,-1]].forEach(([x,y,a,b])=>{c.beginPath();M(x,y+b*q);L(x,y);L(x+a*q,y);c.stroke()});
+ c.textAlign="center";c.fillStyle="#38bdf8";c.font="700 "+34*s+"px ui-monospace,monospace";c.fillText("BLUEPRINTS OF THE WORLD",W/2,H*.06+20*s);
+ const bw=720*s,by=H*.06+44*s;c.fillStyle="#fbbf24";c.fillRect(W/2-bw/2,by,bw,54*s);c.fillStyle="#1b1200";c.font="700 "+30*s+"px ui-monospace,monospace";c.fillText(sto[1]+"  •  "+sto[2].toUpperCase(),W/2,by+37*s);
+ c.save();c.shadowColor="#38bdf8";c.shadowBlur=26*s;c.fillStyle="#fff";c.font="800 "+64*s+"px Segoe UI,Inter,system-ui,sans-serif";c.fillText(sto[0],W/2,by+150*s);c.restore();c.strokeStyle="#fbbf24";c.lineWidth=3*s;c.beginPath();M(W/2-180*s,by+176*s);L(W/2+180*s,by+176*s);c.stroke();
+ const fade=Math.min(1,sc.l*sc.d/.5),cy=H*.40;const R=Math.min(W,H)*.3,gl=c.createRadialGradient(W/2,cy,0,W/2,cy,R*1.3);gl.addColorStop(0,"#38bdf833");gl.addColorStop(1,"#38bdf800");c.fillStyle=gl;c.fillRect(0,0,W,H);c.save();c.translate(W/2,cy);c.strokeStyle="#38bdf855";c.lineWidth=2*s;c.setLineDash([10*s,14*s]);c.rotate(T*.15);c.beginPath();c.arc(0,0,R,0,TAU);c.stroke();c.rotate(-T*.3);c.setLineDash([2*s,10*s]);c.beginPath();c.arc(0,0,R*1.12,0,TAU);c.stroke();c.setLineDash([]);c.rotate(T*.15);c.strokeStyle="#38bdf833";c.beginPath();M(-R*1.3,0);L(R*1.3,0);M(0,-R*1.3);L(0,R*1.3);c.stroke();c.strokeStyle="#fbbf2466";for(let a=0;a<36;a++){c.rotate(TAU/36);c.beginPath();M(R*1.18,0);L(R*(a%3?1.21:1.26),0);c.stroke()}c.restore();c.save();c.globalAlpha=fade;c.translate(W/2,cy+(1-fade)*40*s);c.fillStyle="#38bdf818";const u=Math.min(W,H)/1080*58;c.save();drawIll(sc,T*st.speed,u*(W>H?1:1.1),fade,s);c.restore();c.restore();
+ c.fillStyle="#38bdf8";c.font=26*s+"px ui-monospace,monospace";c.textAlign="center";c.save();const pu=1+.06*Math.sin(T*6);c.translate(W/2,H*.625);c.scale(pu,pu);c.fillStyle=sc.k==NS-1?"#fbbf24":"#38bdf8";c.font="700 "+34*s+"px ui-monospace,monospace";c.shadowColor=c.fillStyle;c.shadowBlur=16*s;c.fillText(sc.k==NS-1?"NEXT UP ▶ "+S[(st.i+1)%S.length][0].toUpperCase():["","","",""][sc.k],0,0);c.restore();c.fillStyle="#bfe3ff";c.font="600 "+27*s+"px ui-monospace,monospace";c.textAlign="center";c.fillText("◆ "+(x=>x[0].toUpperCase()+x.slice(1))(sto[4][STG[sc.k]].split(": ").pop()),W/2,H*.625+48*s);
+ // subtitles
+ const txt=sto[3][sc.k],fs=(W>H?46:54)*s*cfg.sz,bwid=W*.86-70*s,ls=wrap(txt,bwid,"700 "+fs+"px system-ui,sans-serif"),lh=fs*1.3,bh=ls.length*lh+50*s,top=Math.min(H-170*s-bh,H*({b:.70,h:.62,l:.78}[cfg.pos]||.7));
+ c.save();const gr=c.createLinearGradient(0,top,0,top+bh);gr.addColorStop(0,"#0b2342f0");gr.addColorStop(1,"#030b17f5");c.fillStyle=gr;c.strokeStyle="#fbbf24";c.lineWidth=3*s;c.shadowColor="#fbbf2477";c.shadowBlur=28*s;c.beginPath();c.roundRect(W*.07,top,W*.86,bh,22*s);c.fill();c.stroke();c.restore();c.fillStyle="#fbbf24";c.fillRect(W*.07+30*s,top-4*s,90*s,8*s);
+ const ws=txt.split(" "),words=ws.length,vb=st.voice[st.i+"_"+sc.k],el=sc.l*sc.d*st.speed,live=vb&&st.play&&st.vi&&st.vi.k==st.i+"_"+sc.k,pos=live?st.vi.off+(st.ac.currentTime-st.vi.t)*st.speed+.04:el,a0=vb?(vb.vs||0):.12,a1=vb?(vb.ve||vb.duration):sc.d*st.speed*.9,pr=Math.min(1,Math.max(0,(pos-a0)/Math.max(.1,a1-a0))),wl=ws.map(wgt),sum=wl.reduce((a,b)=>a+b,0);let cu=0,act=words-1;for(let q=0;q<words;q++){cu+=wl[q];if(cu/sum>=pr){act=q;break}}let n=0;c.textAlign="left";c.shadowColor="#000";c.shadowOffsetY=3*s;c.shadowBlur=0;c.font="700 "+fs+"px system-ui,sans-serif";const spw=c.measureText(" ").width;
+ ls.forEach((l,j)=>{const tw=l.reduce((a,w)=>a+w.m+spw,-spw);let x=W/2-tw/2;l.forEach(w=>{c.fillStyle=n==act?cfg.hl:n<act?"#ffffff":"#7e98b3";c.fillText(w.x,x,top+25*s+(j+1)*lh-lh*.25);x+=w.m+spw;n++})});c.shadowColor="transparent";c.shadowOffsetY=0;
+ const py=H-90*s;c.fillStyle="#0d2745";c.fillRect(W*.07,py,W*.86,14*s);for(let k=0;k<NS;k++){const w=W*.86/NS-8*s,x=W*.07+k*(w+8*s);c.fillStyle="#0d2745";c.fillRect(x,py,w,14*s);c.fillStyle=k<sc.k?"#38bdf8":k==sc.k?"#fbbf24":"transparent";c.fillRect(x,py,w*(k==sc.k?sc.l:1),14*s)}
+ if(cfg.name){c.save();c.globalAlpha=.85;c.fillStyle="#bfe3ff";c.font="700 "+26*s+"px ui-monospace,monospace";c.textAlign="center";c.fillText("@"+cfg.name.replace(/^@/,""),W/2,H-42*s);c.restore()}cardOv(sc,W,H,s);$("prog").style.width=Math.min(100,T/total()*100)+"%";$("scr").value=T/total()*1000}
+// ---------- loop ----------
+function tick(ts){const dt=Math.min(.25,(ts-st.last)/1000);st.last=ts;if(st.play){st.t+=dt;if(st.t>=total()){st.t=total()-.001;pause();if(st.rec)finish();else if(st.auto)setTimeout(()=>{if(st.auto&&!st.play&&!st.rec){pick((st.i+1)%S.length);play()}},1500)}}render();requestAnimationFrame(tick)}
+function play(){if(st.t>=total()-.01)restart(false);st.play=true;st.scene=-1;musicStart();$("bp").textContent="⏸ Pause"}
+function pause(){st.play=false;stopSrc();musicStop();$("bp").textContent="▶ Play"}
+function restart(p=true){st.t=0;st.scene=-1;if(p)play()}
+// ---------- export ----------
+function finish(){const r=st.rec;if(!r)return;setTimeout(()=>{r.mr.stop()},400)}
+$("dl").onclick=()=>{if(st.rec)return;if(!window.MediaRecorder||!cv.captureStream){alert("MediaRecorder is not supported in this browser. Try Chrome or Edge.");return}
+ audio();const sp=st.speed;st.speed=1;$("sp").value=1;const ts=cv.captureStream(st.fps);st.dest.stream.getAudioTracks().forEach(t=>ts.addTrack(t));
+ const types=["video/mp4;codecs=avc1,mp4a.40.2","video/webm;codecs=vp9,opus","video/webm;codecs=vp8,opus","video/webm"],mt=types.find(t=>MediaRecorder.isTypeSupported(t))||"";
+ const mr=new MediaRecorder(ts,{mimeType:mt,videoBitsPerSecond:2.5e7}),ch=[];mr.ondataavailable=e=>e.data.size&&ch.push(e.data);
+ mr.onstop=()=>{const b=new Blob(ch,{type:mt||"video/webm"}),a=document.createElement("a");a.href=URL.createObjectURL(b);a.download=S[st.i][0].replace(/\W+/g,"_")+"_"+st.fmt.split(" ")[0].replace(":","x")+(mt.includes("mp4")?".mp4":".webm");a.click();st.rec=null;try{st.wl&&st.wl.release()}catch(e){}st.speed=sp;$("sp").value=sp;clearInterval(st.rt);$("rp").style.width="100%";$("rt").textContent="✔ Done — download started";$("stat").textContent="READY"};
+ st.rec={mr};try{navigator.wakeLock&&navigator.wakeLock.request("screen").then(l=>{st.wl=l}).catch(()=>{})}catch(e){}restart(false);mr.start(250);play();$("stat").textContent="● RECORDING";$("rt").textContent="Rendering in real time…";
+ st.rt=setInterval(()=>{$("rp").style.width=Math.min(99,st.t/total()*100)+"%"},200)};
+// ---------- Gemini ----------
+function pcm(b64){const bin=atob(b64),n=bin.length>>1,a=audio(),buf=a.createBuffer(1,n,24000),d=buf.getChannelData(0);for(let i=0;i<n;i++){let v=bin.charCodeAt(i*2)|(bin.charCodeAt(i*2+1)<<8);if(v>32767)v-=65536;d[i]=v/32768}let a0=0,a1=n-1;while(a0<n&&Math.abs(d[a0])<.02)a0++;while(a1>a0&&Math.abs(d[a1])<.02)a1--;buf.vs=Math.max(0,a0/24000-.03);buf.ve=Math.min(buf.duration,a1/24000+.05);return buf}
+const sleep=ms=>new Promise(r=>setTimeout(r,ms));let genStop=false,genBusy=false;
+async function wait(sec,msg){for(let w=sec;w>0;w--){if(genStop)throw new Error("stopped");$("rt").textContent=msg.replace("{s}",w);await sleep(1000)}}
+async function ttsOne(k,txt,voice){for(let at=1;at<=6;at++){if(genStop)throw new Error("stopped");
+ const r=await fetch("https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-tts:generateContent?key="+encodeURIComponent(k),{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({contents:[{parts:[{text:"Say clearly and warmly: "+txt}]}],generationConfig:{responseModalities:["AUDIO"],speechConfig:{voiceConfig:{prebuiltVoiceConfig:{voiceName:voice}}}}})});
+ const d=await r.json().catch(()=>({}));
+ if(r.ok){const p=d.candidates?.[0]?.content?.parts?.find(x=>x.inlineData);if(!p)throw new Error("no audio returned");return pcm(p.inlineData.data)}
+ const msg=d.error?.message||String(r.status);
+ if(r.status==429||/quota|rate limit/i.test(msg)){if(/PerDay|per day/i.test(msg))throw new Error("daily quota is finished (try tomorrow or use a paid key)");const m=msg.match(/retry in ([\d.]+)s/i);await wait(Math.ceil(m?+m[1]:25)+2,"Rate limit reached — retrying in {s}s (try "+at+"/6). Finished clips are kept.");continue}
+ throw new Error(msg)}
+ throw new Error("still rate-limited after 6 tries")}
+$("gen").onclick=async()=>{if(genBusy){genStop=true;return}const k=$("key").value.trim();if(!k){alert("Enter a Gemini API key first, or export with built-in chimes.");return}
+ localStorage.setItem("gk",k);const i=st.i,vo=$("voice").value,gap=+$("gap").value;st.vn=st.vn||{};if(st.vn[i]&&st.vn[i]!=vo)for(let j=0;j<NS;j++)delete st.voice[i+"_"+j];st.vn[i]=vo;
+ genBusy=true;genStop=false;$("gen").textContent="⏹ Stop";const have=()=>[...Array(NS).keys()].filter(j=>st.voice[i+"_"+j]).length;
+ try{for(let j=0;j<NS;j++){if(st.voice[i+"_"+j])continue;$("rt").textContent="Voiceover "+(j+1)+"/"+NS+"…";st.voice[i+"_"+j]=await ttsOne(k,S[i][3][j],vo);if(gap&&have()<NS)await wait(gap,"Clip "+have()+"/"+NS+" ready. Next in {s}s (free-key pace)…")}
+ $("rt").textContent="✔ Voiceover ready ("+NS+"/"+NS+" clips)"}
+ catch(e){$("rt").textContent=(e.message=="stopped"?"Stopped":"Voiceover paused: "+e.message)+" — "+have()+"/"+NS+" clips kept. Press Generate to continue where it stopped."}
+ genBusy=false;$("gen").textContent="🎙 Generate Voiceover"};
+// ---------- UI ----------
+function setFmt(f){st.fmt=f;[cv.width,cv.height]=FM[f];document.querySelectorAll("#fmt button").forEach(b=>b.classList.toggle("on",b.textContent==f))}
+Object.keys(FM).forEach(f=>{const b=document.createElement("button");b.textContent=f;b.onclick=()=>setFmt(f);$("fmt").appendChild(b)});
+V.forEach(v=>$("voice").add(new Option(v,v)));
+function pick(i){if(st.rec)return;st.i=i;st.t=0;st.scene=-1;pause();[...$("list").children].forEach((b,j)=>b.classList.toggle("on",j==i))}
+S.forEach((s,i)=>{const b=document.createElement("button");b.innerHTML=(i+1)+". "+s[0]+" <small>"+s[1]+" — "+s[2]+"</small>";b.onclick=()=>pick(i);$("list").appendChild(b)});
+$("bp").onclick=()=>st.play?pause():play();$("br").onclick=()=>restart();$("sp").onchange=e=>{const f=st.t/total();st.speed=+e.target.value;if(!st.rec)st.t=f*total()};
+$("scr").oninput=e=>{st.t=e.target.value/1000*total();st.scene=-1;stopSrc()};
+document.querySelectorAll("#fps button").forEach(b=>b.onclick=()=>{st.fps=+b.dataset.f;document.querySelectorAll("#fps button").forEach(x=>x.classList.toggle("on",x==b))});
+$("eye").onclick=()=>{const k=$("key");k.type=k.type=="password"?"text":"password";$("eye").textContent=k.type=="password"?"Show":"Hide"};
+$("key").value=localStorage.getItem("gk")||"";
+// ---------- prompts ----------
+const THEMES=["Communication & media","Home & kitchen","Transport & travel","Medicine & health","Energy & electricity","Tools, building & materials","Science instruments & computing","Food, clothing & everyday objects","Sports, music, toys & entertainment"];
+function prompt(n){const banned=S.map(s=>s[0]).join(", "),lo=n*10+1,hi=n*10+10;
+ return `Build a complete, self-contained single-file HTML5 web app (embedded CSS + vanilla JS, zero external dependencies) called "Blueprints of the World — Story Video Studio" for creating, previewing and exporting animated invention story videos.\n\nSTYLE (match exactly): dark engineering-blueprint look (#040c18 canvas, grid lines, cyan #38bdf8 + amber #fbbf24, monospace labels). 2-column layout: left = live <canvas> player (Play/Pause, Restart, scene scrubber, progress bar, speed 1x/1.5x/2x); right = story list, format switcher (9:16 1080x1920, 16:9 1920x1080, 1:1 1080x1080, 4:5 1080x1350), FPS toggle (30/60), Download Video button, optional Gemini API key (show/hide + localStorage) with Gemini TTS voiceover (gemini-2.5-flash TTS, voices Puck, Charon, Kore, Fenrir, Aoede, Zephyr, PCM 24kHz decoded to AudioBuffers, scene length synced to audio), fallback Web Audio chimes, and export through canvas.captureStream + MediaStreamDestination + MediaRecorder with a progress bar and automatic .webm/.mp4 download. Canvas shows an animated grid, corner marks, header badge (BLUEPRINTS OF THE WORLD + Year & Inventor), a centered animated vector illustration, and a large subtitle box with word-by-word highlighting and a scene progress bar.\n\nCONTENT: include 10 unique inventions (Stories #${lo}–${hi}, theme: ${THEMES[n-1]}). Each video must be long enough that a normal child can understand the technology: exactly 8 scenes, each 10–20 words in very simple everyday English with zero jargon, and 5 short plain 1-line tags (max 6 words, no prefixes). Scene order: 1 curiosity hook; 2 how life was before; 3 the inventor notices the problem (name them); 4 the small change they made; 5 the simple science (use "because" or "so"); 6 a kid-friendly everyday comparison ("Imagine…", "It is like…"); 7 how the world is different today; 8 a one-line takeaway plus a "NEXT UP" teaser. Never show words like HOOK, PROBLEM, CHANGE or SCIENCE on screen, because the video is uploaded to YouTube. Use a scene-stage map [0,1,1,2,3,3,4,4] so each drawing evolves: mystery reveal, flaw in red, the small change in amber, motion for the science, and a green payoff with sparkles. Include an Auto-Next Story toggle. The header shows the year and inventor name. Each story needs its own custom animated canvas illustration, accent color, ambient background effect, reveal style, and science-motion style, so no two stories look alike.\n\nBANNED (already used, do not repeat): Batch #1: ${banned}.${n>1?` Also banned: every invention from Prompts 1–${n-1} (Stories #11–${lo-1}); keep a list of your 10 choices and avoid anything similar to earlier themes.`:""}\nAll 100 inventions across the series must be completely different, so choose well-documented inventions with a clear year and inventor.\n\nOutput the complete, fully working HTML file with no placeholders or truncated code.`}
+const done=JSON.parse(localStorage.getItem("pd")||"[]");
+function drawPr(){$("chk").innerHTML='<div class="mono" style="margin:6px 0">PROGRESS: '+(10+done.length*10)+' / 100 INVENTIONS</div><div class="bar"><i style="width:'+(10+done.length*10)+'%"></i></div><span class="badge d">Batch 1 ✔ built-in</span>'+THEMES.map((t,i)=>'<span class="badge '+(done.includes(i+1)?"d":"")+'">'+(i+2)+'. #'+((i+1)*10+1)+'–'+((i+1)*10+10)+(done.includes(i+1)?" ✔":"")+'</span>').join("")}
+$("prs").innerHTML="";for(let n=1;n<=9;n++){const d=document.createElement("div");d.className="pr";d.innerHTML='<div class="row"><b style="flex:1" class="mono">Prompt '+n+' of 9 [Stories #'+(n*10+1)+'–'+(n*10+10)+'] — '+THEMES[n-1]+'</b><button class="pri">Copy Prompt</button></div><textarea readonly></textarea>';d.querySelector("textarea").value=prompt(n);d.querySelector("button").onclick=async e=>{const t=d.querySelector("textarea");try{await navigator.clipboard.writeText(t.value)}catch(x){t.select();document.execCommand("copy")}if(!done.includes(n))done.push(n);localStorage.setItem("pd",JSON.stringify(done));e.target.textContent="✔ Copied";drawPr()};$("prs").appendChild(d)}
+$("pm").onclick=()=>{drawPr();$("modal").style.display="block"};$("mc").onclick=()=>$("modal").style.display="none";
+function listRefresh(){[...$("list").children].forEach((b,i)=>b.innerHTML=(i+1)+". "+S[i][0]+" <small>"+S[i][1]+" — "+S[i][2]+"</small>")}
+function saveOv(i,v){let o={};try{o=JSON.parse(localStorage.getItem("se")||"{}")}catch(e){}if(v)o[i]=v;else delete o[i];localStorage.setItem("se",JSON.stringify(o))}
+$("ed").onclick=()=>{if(st.rec)return;pause();const i=st.i,x=S[i];let h='<div class="row"><b class="mono" style="color:var(--cy);flex:1">✏️ EDIT TEXT — STORY '+(i+1)+'</b><button id="ec">✕ Close</button></div><label>Title</label><input id="e0" style="width:100%"><div class="row"><div style="flex:1"><label>Year</label><input id="e1" style="width:100%"></div><div style="flex:2"><label>Name shown in header (inventor)</label><input id="e2" style="width:100%"></div></div>';
+ for(let k=0;k<NS;k++)h+='<label>Scene '+(k+1)+' text</label><textarea id="s'+k+'" rows="2" style="width:100%;background:#030a14;color:#e2f1ff;border:1px solid var(--ln);border-radius:6px;padding:7px;font:inherit"></textarea>'+(k<5?'<label>Small line '+(k+1)+' under drawing</label><input id="p'+k+'" style="width:100%">':'');
+ h+='<div class="row"><button id="esv" class="pri">💾 Save Text</button><button id="ers">↺ Reset This Story</button></div><div class="mono" style="font-size:11px;color:#8fb4d6">Saved in this browser. If you made a Gemini voiceover, generate it again after changing text.</div>';
+ $("em").innerHTML=h;const fill=y=>{$("e0").value=y[0];$("e1").value=y[1];$("e2").value=y[2];for(let k=0;k<NS;k++){$("s"+k).value=y[3][k]||"";if(k<5)$("p"+k).value=y[4][k].split(": ").pop()}};fill(x);
+ $("ec").onclick=()=>$("modal2").style.display="none";
+ $("esv").onclick=()=>{S[i]=[$("e0").value,+$("e1").value||$("e1").value,$("e2").value,[...Array(NS).keys()].map(k=>$("s"+k).value.trim()),[0,1,2,3,4].map(k=>$("p"+k).value.trim())];saveOv(i,S[i]);for(let k=0;k<NS;k++)delete st.voice[i+"_"+k];listRefresh();st.t=0;st.scene=-1;$("modal2").style.display="none"};
+ $("ers").onclick=()=>{S[i]=JSON.parse(JSON.stringify(DEF[i]));saveOv(i,null);for(let k=0;k<NS;k++)delete st.voice[i+"_"+k];fill(S[i]);listRefresh()};
+ $("modal2").style.display="block"};
+$("an").onclick=()=>{st.auto=!st.auto;$("an").textContent="Auto-Next: "+(st.auto?"On":"Off");$("an").classList.toggle("on",st.auto)};document.querySelectorAll(".tabs button").forEach(b=>b.onclick=()=>{document.querySelectorAll(".tabs button").forEach(x=>x.classList.toggle("on",x==b));document.querySelectorAll(".tp").forEach(x=>x.classList.toggle("on",x.id==b.dataset.t))});
+const ids=["c_sz","c_pos","c_hl","c_name","c_pace","c_in","c_out","c_fx","c_mu","c_mv"];
+$("c_sz").value=cfg.sz*100;$("c_pos").value=cfg.pos;$("c_hl").value=cfg.hl;$("c_name").value=cfg.name;$("c_pace").value=cfg.pace*100;$("c_in").checked=cfg.intro;$("c_out").checked=cfg.outro;$("c_fx").checked=cfg.fx;$("c_mu").checked=cfg.music;$("c_mv").value=cfg.mv*100;
+const upd=()=>{const o=[cfg.intro,cfg.outro,cfg.pace].join();cfg.sz=$("c_sz").value/100;cfg.pos=$("c_pos").value;cfg.hl=$("c_hl").value;cfg.name=$("c_name").value;cfg.pace=$("c_pace").value/100;cfg.intro=$("c_in").checked;cfg.outro=$("c_out").checked;cfg.fx=$("c_fx").checked;cfg.music=$("c_mu").checked;cfg.mv=$("c_mv").value/100;if(o!=[cfg.intro,cfg.outro,cfg.pace].join()){st.t=0;st.scene=-1}if(st.mus)st.mus.g.gain.value=cfg.mv*.12;localStorage.setItem("ss",JSON.stringify(cfg))};
+ids.forEach(id=>{$(id).addEventListener("input",upd);$(id).addEventListener("change",upd)});
+$("thumb").onclick=()=>{if(st.rec)return;pause();const t0=st.t,si=cfg.intro;cfg.intro=false;const d=durs();st.t=d[0]+d[1]+d[2]+d[3]*.5;render();cfg.intro=si;cv.toBlob(b=>{const a=document.createElement("a");a.href=URL.createObjectURL(b);a.download=S[st.i][0].replace(/\W+/g,"_")+"_thumbnail.png";a.click();st.t=t0;st.scene=-1},"image/png")};
+setFmt("9:16 Reels/Shorts");pick(0);requestAnimationFrame(tick);
+</script><a id="fp-home" href="../index.html" aria-label="First Principles home" style="display:none"><img src="../assets/logo.png" alt="" width="34" height="34"></a>
+<style>@media (display-mode: standalone){#fp-home{display:block!important;position:fixed;left:max(10px,env(safe-area-inset-left));bottom:max(10px,env(safe-area-inset-bottom));z-index:2147483000;width:38px;height:38px;border-radius:50%;overflow:hidden;border:1.5px solid #c9a45c;box-shadow:0 2px 10px #0009;opacity:.85}#fp-home img{display:block;width:100%;height:100%}}</style>
+</body></html>
